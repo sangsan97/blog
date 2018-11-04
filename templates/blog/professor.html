@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% load static %}<link rel="stylesheet" href="{% static 'professor.css' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 img">
+                <img width="100" height="110" src="{% static 'person.jpg' %}"  alt="" class="img-rounded">
+            </div>
+            <div class="col-md-6 details">
+                <blockquote>
+                    <h5>Professor Kim</h5>
+                    <small><cite title="Source Title">Seoul National University, Korea  <i class="icon-map-marker"></i></cite></small>
+                </blockquote>
+                <p>
+                    kim_prof@snu.ac.kr <br>
+                    www.blog.com <br>
+                    May 23th, 1980</p>
+            </div>
+        </div>
+    </div>
+
+    {% block box %}
+    {% endblock %}
+
+{% endblock %}

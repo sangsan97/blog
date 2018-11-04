@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="row">
+<div class="col-2">
+    <div id="list-example" class="list-group sticky-top">
+        <a class="list-group-item list-group-item-action" href="{% url 'post_list' %}">Category 1</a>
+        <a class="list-group-item list-group-item-action" href="{% url 'post_list2' %}">Category 2</a>
+        <a class="list-group-item list-group-item-action" href="{% url 'post_draft_list' %}">Draft List</a>
+        <a class="list-group-item list-group-item-action" href="{% url 'post_form' %}">NewPost</a>
+    </div>
+</div>
+<div class = "card-deck col-10">
+    {% for post in post_list %}
+    <div class = "col-6">
+        <div class="card border-secondary mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h5>
+                    <p class="card-text">{{ post.text|truncatechars:200 }}</p>
+                    <a href="{% url 'post_edit' pk=post.pk %}" class="card-link">Edit</a>
+                    <a href="{% url 'post_remove' pk=post.pk %}" class="card-link">Delete</a>
+                </div>
+            <div class="card-footer text-muted">
+                Published On : {{ post.published_date|date:"d-M-Y" }}
+                <br>
+                Written by : {{ post.author }}
+            </div>
+        </div>
+            
+</div>
+    <br>
+    
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

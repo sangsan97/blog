@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="POST" class="container-fluid" action="{% url 'login' %}">
+        {%  csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="Login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'join' %}">Join Us!</a></li>
+        </ul>
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'blog/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="card">
+        <div class="card-header">
+                {{ post.title }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.text|safe|linebreaksbr }}</p>
+          <p>
+            {% if post.photo %}
+            <img src="{{ post.photo.url }}"/>
+            {% endif %}
+          </p>
+          {% if post.published_date__isnull %}
+          <a href="{% url 'post_draft_list' %}" class="btn btn-primary">To the list</a>
+          {% elif post.where_to_status == 'post_list' %}
+          <a href="{% url 'post_list' %}" class="btn btn-primary">To the list</a>
+          {% elif post.where_to_status == 'post_list2' %}
+          <a href="{% url 'post_list2' %}" class="btn btn-primary">To the list</a>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <!-- <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-primary">Publish</a> -->
+          <!-- detail view doesn't need publish method -->
+          <a href="{% url 'post_remove' pk=post.pk %}"class="btn btn-primary">Remove</a>
+          {% endif %}
+
+          {% if post.published_date %}
+            <div class="date postdate">
+            {{ post.published_date }}
+            </div>
+            {% else %}
+            <a class="btn btn-primary" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+            {% endif %}
+            <br>
+            
+    </div>
+</div>
+
+<!-- comment part -->
+<hr>
+    <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add Comment</a>
+
+<div class="container">
+    {% for comment in post.comments.all %}
+        <br>
+        {% if user.is_authenticated or comment.approved_comment %}
+
+            {{ comment.created_date }}
+            {% if not comment.approved_comment %}
+                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">
+                <span class="glyphicon glyphicon-remove"></span></a>
+                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">
+                <span class="glyphicon glyphicon-ok"></span></a>
+            {% endif %}
+
+        <p>{{ comment.text|safe|linebreaks }}</p>
+        <p>Posted by: <strong>{{ comment.author }}</strong></p>
+        {% endif %}
+    {% empty %}
+        <p>No comments posted</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

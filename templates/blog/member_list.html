@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% load static %}
+<link rel="stylesheet" href="{% static 'member_list.css' %}">
+    <section class="row-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div data-spy="scroll" id="list-example" class="list-group">
+                    {% for status, cap_status in where_to_status %}
+                        <a class="list-group-item list-group-item-action sticky-top" href="#list-item-{{ status }}">{{ cap_status }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class = "card-deck col-10">
+                {% for status, cap_status in where_to_status %}
+                    <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example jumbotron col-12">
+                        <h3 class="display-5" id="list-item-{{status}}">{{cap_status}}</h3>
+                    </div>
+
+                            {% for member in members %}
+                                {% if status == member.where_to_status %}
+                                    <nav class="row">
+                                    <div class="col=md-6 img">
+                                        <img class="rounded-circle" height="150" width="120" src="{{ member.photo.url }}">
+                                    </div>
+                                    <div class="col-md-6 details"><blockquote><h5>{{ member.name }}</h5></blockquote>
+                                        <p>{{ member.text|truncatechars:200 }}</p>
+                                    </div>
+                                    </nav>
+                                {% endif %}{% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}

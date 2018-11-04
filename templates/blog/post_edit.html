@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2 class="posttitle loader">{{ post.title }}</h2>
+<form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class = "col-6">
+                    {{ form.title|as_crispy_field}}
+            </div>
+            <div class = "col-6">
+                {{ form.where_to_status|as_crispy_field}}
+            </div>
+        </div>
+        {{ form.text|as_crispy_field }}
+        <div class = "col-6">
+                {{ form.document|as_crispy_field}}
+            </div>
+            <div class = "col-6">
+                {{ form.photo|as_crispy_field}}
+            </div>
+        <button type="submit" class="btn btn-success">Edit</button>
+
+    </form>
+
+{% endblock %}

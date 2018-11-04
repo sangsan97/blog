@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- code for the actual page -->
+    <div class="card" >
+        <div class="card-header">
+            <h2>Uploading New Publication</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class = "col-6">
+                {{ form.title|as_crispy_field}}
+                </div>
+                <div class = "col-6">
+                {{ form.year_of_publication|as_crispy_field }}
+                </div>
+            </div>
+            {{ form.author | as_crispy_field }}
+            {{ form.explanation_for_the_publication|as_crispy_field }}
+            <br>
+            {{ form.link_url|as_crispy_field }}
+                        
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</div>
+</div>
+{% endblock %}

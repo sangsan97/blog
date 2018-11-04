@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="row">
+<div class="col-2">  
+    <!-- relative position is achieved by inserting "sticky top" in the class -->
+    <div data-spy="scroll" id="list-example" class="list-group sticky-top">
+        <!-- scroll spy header part -->
+        {% for year in years %}
+        <a class="list-group-item list-group-item-action" href="#list-item-{{year}}">{{year}}</a>
+        {% endfor %}
+    </div>
+    
+</div>
+<div class = "card-deck col-10">
+    {% for year in years %}
+    <div data-spy="scroll" data-target="#list-example" data-offset="10" class="scrollspy-example jumbotron col-12">
+        <h1 class="display-4" id="list-item-{{year}}">{{year}}</h1>
+    </div>
+    {% for publication in publications %}    
+    {% if year == publication.year_of_publication.year %}
+    
+     <!-- scroll spy function is added -->
+    <div  class="col-12">
+            <div class="card border-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{{ publication.link_url }}">{{ publication.title }}</a></h5>
+                    <p class="card-text">Author : {{ publication.author|truncatechars:200 }}</p>        
+                    <p class="card-text">{{ publication.explanation_for_the_publication|truncatechars:200 }}</p>
+                        <!-- TODO : make authorized user only to delete -->
+                        <a href="{% url 'publication_remove' pk=publication.pk %}" class="card-link">Delete</a>
+                    </div>
+                <div class="card-footer text-muted">
+                    <!-- publication date should be integrated -->
+                    Published : {{ publication.year_of_publication|date:"Y. M. d"}}
+                </div>
+            </div>
+                
+    </div>
+        <br>
+    {% endif %}    
+    {% endfor %}
+    {% endfor %}
+    
+    
+
+</div>
+</div>
+
+
+    
+
+<script>
+$('body').scrollspy({ target: "#list-example" })
+</script>
+
+{% endblock %}

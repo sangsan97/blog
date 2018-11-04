@@ -1,0 +1,104 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+{%load static%}
+    <div class = "row col-12" style="height: auto;">
+    <div class="col-1"></div>
+      <div id="carouselExampleIndicators" class="carousel slide col-10" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" >
+          <div class="carousel-item active" style="vertical-align:middle; text-align:center">
+          <img class="img-fluid rounded" style="max-width: 100%; max-height: 400px; object-fit: contain; " alt="Responsive image" src="{% static 'Boston.jpg' %}">  
+          </div>
+          <div class="carousel-item" style="vertical-align:middle; text-align:center">
+            <img class="img-fluid rounded" style="max-width: 100%; max-height: 400px;  object-fit: contain;  " alt="Responsive image" src="{% static 'LA.jpg' %}">
+          </div>
+          <div class="carousel-item" style="vertical-align:middle; text-align:center">
+            <img class="img-fluid rounded" style="max-width: 100%; max-height: 400px;  object-fit: contain; " alt="Responsive image" src="{% static 'NewYork.jpg' %}">
+          </div>
+        </div>
+        <!-- previous/next button -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'slide2.css' %}">
+        <a class="carousel-control-prev" style="object-fit: contain;" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" style="object-fit: contain;" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      <div class="col-1"></div>
+    </div>
+
+    <hr  class="partition_line">
+
+    <div class="row" style="height: auto;">
+        <div class="col-8 col-sm-4" id="publication">    
+            <div class="row">
+                
+                <h2 class="col-12" id="publication_head"><a id="pub_head_a" href="{% url 'publication_list' %}">Publication</a></h2>
+                
+            </div>
+            <hr id="partition_title">
+            <ul id="pub_ul">
+                {% for publication in recent_publications %}
+                <li>
+                    <div class="row">
+                    <div class="col-8" id="pub_title">
+                        {{publication.title}}
+                    </div>
+                    <div class="col-4" id="pub_author">
+                        by {{publication.author}}
+                    </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-8 col-sm-4" id="post">
+            <h2>PostList1</h2>
+            <ul>
+                <hr>
+                {% for post in recent_posts %}
+                <li><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></li>
+                <hr>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-8 col-sm-4" class="lecture">
+            <h2>PostList2</h2>
+            <ul>
+                <hr>
+                {% for post in recent_posts2 %}
+                <li>
+                    <a href="{% url 'post_detail' pk=post.pk %}" id="post_title">{{post.title}}</a>
+                    <span id="post_date">[{{post.published_date|date:"Y-m-d"}}]</span>
+                </li>
+                <hr>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <script>
+        
+        $('.carousel').carousel({ interval: 8000 })
+    </script>
+
+    
+
+
+
+{% endblock %}
